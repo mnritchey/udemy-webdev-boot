@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // Caculate Page (index.html)
 
@@ -24,10 +26,6 @@ app.post('/', function(req, res) {
   res.send('The result of the Calculation is: ' + result);
 });
 
-app.listen(port, function() {
-  console.log('Calculator server is running on port 3000');
-});
-
 
 
 // BMI Calculator Page (bmiCalculator.html)
@@ -37,10 +35,18 @@ app.get('/bmiCalculator', function(req, res) {
 });
 
 app.post('/bmiCalculator', function(req, res) {
-  let weight = Number(req.body.weight);
-  let height = Number(req.body.height);
+  let weight = parseFloat(req.body.weight);
+  let height = parseFloat(req.body.height);
   let bmi = (weight / (height * height)) * 703;
   let bmiRounded = bmi.toFixed(1);
 
   res.send("Your BMI is " + bmiRounded + ".")
+});
+
+
+
+// Port Listening
+
+app.listen(port, function() {
+  console.log('Calculator server is running on port 3000');
 });
